@@ -1,0 +1,30 @@
+{
+  "name": "chord",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@icon-park/vue-next": "^1.4.2",
+    "pinia": "^2.1.7",
+    "swapy": "^0.3.1",
+    "tonal": "^6.0.1",
+    "tone": "^14.7.77",
+    "vexflow": "^4.2.3",
+    "vue": "^3.4.21",
+    "vuedraggable": "^4.1.0",
+    "webmidi": "^3.1.9"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "autoprefixer": "^10.4.19",
+    "daisyui": "^4.10.2",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.0"
+  }
+}
