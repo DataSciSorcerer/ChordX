@@ -5,7 +5,6 @@ import { sortKeys } from './util/sortKeys';
 import { drawScore } from './util/drawScore';
 import { WebMidi } from 'webmidi';
 import { Chord } from 'tonal'
-import * as Tone from 'tone'
 
 // 数据
 const keys = ref("C E G");
@@ -63,24 +62,10 @@ const scrollPiano = (direction) => {
     }
 };
 
-const synth = new Tone.PolySynth(Tone.Synth).toDestination();
-
 function handleSoundToggle(isOn) {
   isSoundOn.value = isOn;
   console.log("声音状态改变:", isOn);
-  if (isOn) {
-    Tone.start();
-  }
 }
-
-// 添加采样器
-const sampler = new Tone.Sampler({
-  urls: {
-    A1: "A1.mp3",
-    A2: "A2.mp3",
-  },
-  baseUrl: "https://tonejs.github.io/audio/casio/",
-}).toDestination();
 
 // 优化 MIDI 相关函数
 const setupMIDI = () => {
@@ -118,11 +103,6 @@ const setupMIDI = () => {
     keys.value = pressedKeys.join(' ');
     chords.value = Chord.detect(pressedKeys);
     activeKeys.value.push(noteName);
-
-    if (isSoundOn.value) {
-      // 使用采样器播放声音
-      sampler.triggerAttack(Tone.Frequency(e.note.number, "midi").toFrequency());
-    }
   };
 
   const handleNoteOff = (e) => {
@@ -132,11 +112,6 @@ const setupMIDI = () => {
     if (index > -1) {
       pressedKeys.splice(index, 1);
       activeKeys.value = activeKeys.value.filter(key => key !== noteName);
-
-      if (isSoundOn.value) {
-        // 停止采样器的声音
-        sampler.triggerRelease(Tone.Frequency(e.note.number, "midi").toFrequency());
-      }
     }
   };
 };
@@ -145,9 +120,6 @@ const setupMIDI = () => {
 onMounted(() => {
   drawScore(keyScore.value);
   setupMIDI();
-  Tone.loaded().then(() => {
-    console.log('采样器已加载完成');
-  });
 });
 </script>
 
